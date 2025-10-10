@@ -102,7 +102,7 @@ A powerful use case is to layer the generated text over another image.
 3.  Load a base image using a `Load Image` node.
 4.  Use a `Composite` or `Layer Style` node to combine the base image with the `IMAGE` and `MASK` from the Google Font Node.
 
-![Example](media/example-01.png)
+![Example](media/example.png)
 
 ## Troubleshooting
 
