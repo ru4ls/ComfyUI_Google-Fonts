@@ -70,7 +70,7 @@ The node will automatically detect and use this key on the next restart.
 ## How to Use
 
 1.  After restarting ComfyUI, you can add the node by right-clicking on the canvas and selecting:
-    `Add Node` -> `image` -> `Google Font Text Image`
+    `Add Node` -> `Ru4ls/Google Fonts` -> `Google Font Text Image`
 
 2.  Connect the outputs to other nodes. For example, connect the `IMAGE` output to a `Preview Image` node to see the result or connect it to other nodes for further processing.
 
