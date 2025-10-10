@@ -11,7 +11,6 @@ This custom node provides a powerful and flexible way to create images from text
 
 Click below to see the video example:
 <br/>
-
 <p align="center">
   <a href="https://www.youtube.com/watch?v=KA2Uxha0GsQ" target="_blank">
     <img src="https://github.com/ru4ls/ComfyUI_Google-Fonts/blob/main/media/example-1.png?raw=true" alt="Watch the Video Demo " width="90%">
@@ -26,12 +25,12 @@ Click below to see the video example:
 -   **Advanced Typographic Control:** Adjust font size, weight, style (normal/italic), text alignment, line height, and text transformation (uppercase, lowercase, etc.).
 -   **Dual Output Modes:**
     -   **Custom Text:** Render any text you input, respecting line breaks (`\n`).
-    -   **Standard Character Set:** Generate a font specimen image (A-Z, a-z, 0-9, symbols) to capture the font's overall style.
+    -   **Standard Character Set:** Generate a font specimen image (A-Z, a-z, 0-9, symbols) to capture the font's overall style as reference for multimodal models.
 -   **Transparent Background:** Output a clean RGB image and a corresponding alpha mask, perfect for compositing and layering.
 -   **Dynamic Font Variant Validation:** The node intelligently checks if a selected font weight/style is available and provides a graceful fallback if it isn't.
 -   **Clean & Stable:** 100% Python backend. No custom frontend code, ensuring maximum compatibility with ComfyUI versions.
 
-## ⚙️ Installation
+## Installation
 
 1.  **Navigate to your ComfyUI custom nodes directory:**
     ```bash
@@ -47,7 +46,7 @@ Click below to see the video example:
 3.  **Install the required dependencies:**
     Open a terminal/command prompt, activate your ComfyUI virtual environment (venv), and run:
     ```bash
-    pip install -r ComfyUI/custom_nodes/ComfyUI_Google-Font/requirements.txt
+    pip install -r ComfyUI_Google-Font/requirements.txt
     ```
     *(This will install `requests`, `html2image`, and `python-dotenv`.)*
 
@@ -110,8 +109,6 @@ A powerful use case is to layer the generated text over another image.
 4.  Use a `Composite` or `Layer Style` node to combine the base image with the `IMAGE` and `MASK` from the Google Font Node.
 
 ![Example](media/example.png)
-
-![Preview](media/example-1.png)
 
 ## Troubleshooting
 
