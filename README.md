@@ -13,7 +13,7 @@ This custom node provides a powerful and flexible way to create images from text
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=KA2Uxha0GsQ" target="_blank">
-    <img src="https://img.youtube.com/vi/A2Uxha0GsQ/maxresdefault.jpg" alt="Watch the Video Demo " width="90%">
+    <img src="https://github.com/ru4ls/ComfyUI_Google-Fonts/blob/main/media/example-1.png?raw=true" alt="Watch the Video Demo " width="90%">
   </a>
 </p>
 
