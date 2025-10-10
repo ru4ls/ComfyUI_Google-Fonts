@@ -9,7 +9,13 @@ This custom node provides a powerful and flexible way to create images from text
 
 ![Preview](media/preview.png)
 
-![Preview](media/example-1.png)
+<br/>
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=KA2Uxha0GsQ" target="_blank">
+    <img src="https://img.youtube.com/vi/A2Uxha0GsQ/maxresdefault.jpg" alt="Watch the Video Demo " width="90%">
+  </a>
+</p>
 
 ---
 
@@ -103,6 +109,8 @@ A powerful use case is to layer the generated text over another image.
 4.  Use a `Composite` or `Layer Style` node to combine the base image with the `IMAGE` and `MASK` from the Google Font Node.
 
 ![Example](media/example.png)
+
+![Preview](media/example-1.png)
 
 ## Troubleshooting
 
