@@ -9,6 +9,7 @@ This custom node provides a powerful and flexible way to create images from text
 
 ![Preview](media/preview.png)
 
+Click below to see the video example:
 <br/>
 
 <p align="center">
