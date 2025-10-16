@@ -28,7 +28,6 @@ Click below to see the video example:
     -   **Standard Character Set:** Generate a font specimen image (A-Z, a-z, 0-9, symbols) to capture the font's overall style as reference for multimodal models.
 -   **Transparent Background:** Output a clean RGB image and a corresponding alpha mask, perfect for compositing and layering.
 -   **Dynamic Font Variant Validation:** The node intelligently checks if a selected font weight/style is available and provides a graceful fallback if it isn't.
--   **Clean & Stable:** 100% Python backend. No custom frontend code, ensuring maximum compatibility with ComfyUI versions.
 
 ## Installation
 
