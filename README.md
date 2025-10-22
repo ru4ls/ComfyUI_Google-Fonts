@@ -7,13 +7,13 @@
 
 This custom node provides a powerful and flexible way to create images from text with advanced typographic controls. It's an ideal tool for generating inputs for Typography, creating titles and watermarks, or producing font specimens for multimodal models to analyze and generate.
 
-![Preview](media/preview.png)
+![Preview](media/example-preview.png)
 
 Click below to see the video example:
 <br/>
 <p align="center">
   <a href="https://www.youtube.com/watch?v=KA2Uxha0GsQ" target="_blank">
-    <img src="https://github.com/ru4ls/ComfyUI_Google-Fonts/blob/main/media/example-1.png?raw=true" alt="Watch the Video Demo " width="90%">
+    <img src="https://github.com/ru4ls/ComfyUI_Google-Fonts/blob/main/media/example-1.png?raw=true" alt="Watch the Video Demo" width="90%">
   </a>
 </p>
 
@@ -26,6 +26,9 @@ Click below to see the video example:
 -   **Dual Output Modes:**
     -   **Custom Text:** Render any text you input, respecting line breaks (`\n`).
     -   **Standard Character Set:** Generate a font specimen image (A-Z, a-z, 0-9, symbols) to capture the font's overall style as reference for multimodal models.
+-   **Automatic Dimension Calculation:** Set width or height to -1 to automatically size the image based on text content (requires Playwright).
+-   **Text Wrapping:** Text automatically wraps within specified dimensions when using fixed width/height values.
+-   **Individual Padding Controls:** Fine-tune text positioning with independent controls for top, right, bottom, and left padding.
 -   **Transparent Background:** Output a clean RGB image and a corresponding alpha mask, perfect for compositing and layering.
 -   **Dynamic Font Variant Validation:** The node intelligently checks if a selected font weight/style is available and provides a graceful fallback if it isn't.
 
@@ -47,9 +50,15 @@ Click below to see the video example:
     ```bash
     pip install -r ComfyUI_Google-Font/requirements.txt
     ```
-    *(This will install `requests`, `html2image`, and `python-dotenv`.)*
 
-4.  **Restart ComfyUI:**
+4.  **Install Playwright browser binaries:**
+    Run the following command to install the necessary browser binaries for Playwright:
+    ```bash
+    playwright install
+    ```
+    *(Note: You may need to run this in your activated virtual environment)*
+
+5.  **Restart ComfyUI:**
     You must completely restart ComfyUI for the node to be loaded.
 
 ## Google Fonts API Key (Recommended)
@@ -80,8 +89,9 @@ The node will automatically detect and use this key on the next restart.
 | `font_family`            | A dropdown list of all available Google Fonts.                                                                                           |
 | `output_mode`            | - **Custom Text:** Renders the text from the `text` input box.<br>- **Standard Character Set:** Renders a predefined set of characters.      |
 | `text`                   | The text you want to display. Supports multiple lines. Ignored if `output_mode` is "Standard Character Set".                               |
-| `width` / `height`       | The dimensions of the output image in pixels.                                                                                            |
-| `font_size`              | The size of the font in points. **(See Troubleshooting for text cut-off)**                                                                 |
+| `dimension_mode`         | Choose between "Auto" (automatic sizing based on text content) or "Define Manually" (fixed width/height).                                  |
+| `width` / `height`       | The dimensions of the output image in pixels (64-8192). Only used when `dimension_mode` is "Define Manually".                               |
+| `font_size`              | The size of the font in points.                                                                                                          |
 | `font_weight`            | The thickness of the font (e.g., `100` for Thin, `400`/`regular` for Normal, `700` for Bold).                                              |
 | `font_style`             | Choose between `normal` and `italic`.                                                                                                    |
 | `text_align`             | Horizontal alignment of the text: `center`, `left`, or `right`.                                                                          |
@@ -90,6 +100,10 @@ The node will automatically detect and use this key on the next restart.
 | `text_color`             | The color of the text in hex format (e.g., `#000000` for black). Use with an external color picker node.                                   |
 | `background_color`       | The color of the background in hex format (e.g., `#FFFFFF` for white). Ignored if `transparent_background` is checked.                      |
 | `transparent_background` | **(Recommended)** If checked, the background will be transparent, and the `MASK` output will contain the text's shape.                      |
+| `padding_top`            | Top padding in pixels (0-200). Controls the space between text and the top edge.                                                          |
+| `padding_right`          | Right padding in pixels (0-200). Controls the space between text and the right edge.                                                      |
+| `padding_bottom`         | Bottom padding in pixels (0-200). Controls the space between text and the bottom edge.                                                     |
+| `padding_left`           | Left padding in pixels (0-200). Controls the space between text and the left edge.                                                         |
 
 ### Node Outputs
 
@@ -107,18 +121,26 @@ A powerful use case is to layer the generated text over another image.
 3.  Load a base image using a `Load Image` node.
 4.  Use a `Composite` or `Layer Style` node to combine the base image with the `IMAGE` and `MASK` from the Google Font Node.
 
-![Example](media/example.png)
-
 ## Troubleshooting
 
 #### **Help! My text is getting cut off (truncated)!**
 
-This is the most common issue. This node **does not automatically resize the font** to fit the image. If the text is too large for the canvas, it will be cut off.
+This issue has been significantly improved with the Playwright migration. You now have two solutions:
 
-To fix this, you must **manually adjust the settings**:
+**Solution 1: Use Auto-Sizing**
+1.  Set `dimension_mode` to **Auto** for automatic sizing based on text content.
+
+**Solution 2: Manual Adjustments**
 1.  **Decrease** the `font_size`.
-2.  **Increase** the `width` or `height` of the image.
-3.  **Decrease** the `line_height` if you have multiple lines of text.
+2.  **Increase** the `width` or `height` of the image when in "Define Manually" mode.
+3.  **Increase** the `padding` values to provide more space around the text.
+4.  **Decrease** the `line_height` if you have multiple lines of text.
+
+#### **Playwright Browser Not Found Error**
+
+If you get a browser not found error after installation:
+1.  Run `playwright install` in your terminal/command prompt to install browser binaries.
+2.  Make sure to activate your virtual environment before running the command.
 
 #### **The node doesn't appear in ComfyUI after installation.**
 
@@ -134,3 +156,7 @@ This can happen if the node fails to connect to the Google Fonts API.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+See the [CHANGELOG](CHANGELOG.md) file for a complete history of changes.

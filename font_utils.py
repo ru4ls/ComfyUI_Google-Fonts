@@ -26,8 +26,9 @@ def get_google_fonts_data(api_key):
         print(f"GoogleFontNode: ERROR! Failed to fetch Google Fonts list: {e}")
         return []
 
-# --- SIMPLE GOOGLE FONT HTML RENDERER ---
-def create_simple_google_font_html(font_family, text, width, height, style_params):
+# --- PLAYWRIGHT-READY HTML RENDERER ---
+def create_playwright_google_font_html(font_family, text, style_params, width=None, height=None):
+    """Creates HTML content optimized for Playwright with automatic sizing and optional text wrapping"""
     google_font_url_name = font_family.replace(' ', '+') 
     escaped_text = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br>')
     
@@ -39,33 +40,100 @@ def create_simple_google_font_html(font_family, text, width, height, style_param
     text_transform = style_params.get('text_transform', 'none')
     text_color = style_params.get('text_color', '#000000')
     background_color = style_params.get('background_color', '#FFFFFF')
+    padding_top = style_params.get('padding_top', 20)
+    padding_right = style_params.get('padding_right', 20)
+    padding_bottom = style_params.get('padding_bottom', 20)
+    padding_left = style_params.get('padding_left', 20)
     
     # Construct the font URL with the specific weights and styles needed
     font_request_url = f"https://fonts.googleapis.com/css2?family={google_font_url_name}:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 
-    html_content = f"""
-    <!DOCTYPE html><html><head><meta charset="UTF-8">
-    <link href="{font_request_url}" rel="stylesheet">
-    <style>
-        html, body {{ height: 100%; width: 100%; margin: 0; padding: 0; box-sizing: border-box; background-color: {background_color}; }}
-        body {{ 
-            display: flex; 
-            justify-content: {'center' if text_align == 'center' else 'flex-start' if text_align == 'left' else 'flex-end'};
-            align-items: center; 
-        }}
-        .text-container {{
-            font-family: '{font_family}', sans-serif;
-            font-size: {font_size}px;
-            font-weight: {font_weight};
-            font-style: {font_style};
-            color: {text_color};
-            text-align: {text_align};
-            line-height: {line_height};
-            text-transform: {text_transform};
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-        }}
-    </style></head><body><div class="text-container">{escaped_text}</div></body></html>
-    """
+    # If specific width/height are provided, we want to enable text wrapping
+    if width and width > 0:
+        # Fixed width layout with text wrapping
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <link href="{font_request_url}" rel="stylesheet">
+            <style>
+                html, body {{
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    background-color: {background_color};
+                    font-family: '{font_family}', sans-serif;
+                    width: {width}px;
+                    height: {height if height and height > 0 else 'auto'}px;
+                }}
+                .text-container {{
+                    font-size: {font_size}px;
+                    font-weight: {font_weight};
+                    font-style: {font_style};
+                    color: {text_color};
+                    text-align: {text_align};
+                    line-height: {line_height};
+                    text-transform: {text_transform};
+                    width: calc(100% - {padding_left + padding_right}px);
+                    height: calc(100% - {padding_top + padding_bottom}px);
+                    padding: {padding_top}px {padding_right}px {padding_bottom}px {padding_left}px;
+                    word-wrap: break-word;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: {'center' if text_align == 'center' else 'flex-start' if text_align == 'left' else 'flex-end'};
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="text-container">{escaped_text}</div>
+        </body>
+        </html>
+        """
+    else:
+        # Auto-sizing layout without fixed dimensions
+        html_content = f"""
+        <!DOCTYPE html>
+        <html style="width: auto; height: auto; overflow: visible;">
+        <head>
+            <meta charset="UTF-8">
+            <link href="{font_request_url}" rel="stylesheet">
+            <style>
+                html, body {{
+                    margin: 0;
+                    padding: 0;
+                    width: auto !important;
+                    height: auto !important;
+                    min-width: 0;
+                    min-height: 0;
+                    overflow: visible;
+                    box-sizing: border-box;
+                    background-color: {background_color};
+                    font-family: '{font_family}', sans-serif;
+                }}
+                .text-container {{
+                    font-size: {font_size}px;
+                    font-weight: {font_weight};
+                    font-style: {font_style};
+                    color: {text_color};
+                    text-align: {text_align};
+                    line-height: {line_height};
+                    text-transform: {text_transform};
+                    padding: {padding_top}px {padding_right}px {padding_bottom}px {padding_left}px;
+                    display: inline-block;
+                    max-width: none !important;
+                    width: auto !important;
+                    height: auto !important;
+                    overflow: visible;
+                    white-space: pre-wrap; /* Allow line breaks from \\n but no forced wrapping */
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="text-container">{escaped_text}</div>
+        </body>
+        </html>
+        """
+    
     return html_content
