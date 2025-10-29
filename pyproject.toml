@@ -1,5 +1,5 @@
 [project]
-name = "google-fonts"
+name = "comfyui-google-fonts"
 description = "This custom node provides a powerful and flexible way to create images from text with advanced typographic controls. It's an ideal tool for generating inputs for Typography, creating titles and watermarks, or producing font specimens for multimodal models to analyze and generate."
 version = "1.0.0"
 license = {file = "LICENSE"} 
@@ -25,13 +25,13 @@ dependencies = ["requests", "playwright", "python-dotenv"]
 [project.urls]
 Repository = "https://github.com/ru4ls/ComfyUI_Google-Fonts"
 #  Used by Comfy Registry https://registry.comfy.org
-Documentation = "https://github.com/ru4ls/ComfyUI_Google-Fonts/wiki"
-"Bug Tracker" = "https://github.com/ru4ls/ComfyUI_Google-Fonts/issues"
+# Documentation = "https://github.com/ru4ls/ComfyUI_Google-Fonts/wiki"
+# "Bug Tracker" = "https://github.com/ru4ls/ComfyUI_Google-Fonts/issues"
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "ruals"
 DisplayName = "ComfyUI_Google-Fonts"
-Icon = ""
-includes = [] 
+Icon = "https://avatars.githubusercontent.com/u/126259521?v=4"
+# includes = [] 
 # "requires-comfyui" = ">=1.0.0"  # ComfyUI version compatibility
 
